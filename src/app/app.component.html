@@ -1,0 +1,30 @@
+<form [formGroup]="fg" (submit)="onSubmit($event)">
+<div id="tags">
+  <label>
+    Player 1 Tag:
+    <input id="p1tag" type="text" formControlName="name1FC">
+  </label>
+  <label>
+    Player 2 Tag:
+    <input id="p2tag" type="text" formControlName="name2FC">
+  </label>
+</div>
+  <input type="submit">
+<div id="char-select">
+  <label>
+    Player 1 Fighter:
+    <select>
+      <option></option>
+    </select>
+  </label>
+  <label>
+    Player 2 Fighter:
+    <select>
+      <option></option>
+    </select>
+  </label>
+</div>
+<br/>
+</form>
+<p id="p1nameUpdate"></p>
+<p id="p2nameUpdate"></p>
