@@ -9,22 +9,23 @@
     <input id="p2tag" type="text" formControlName="name2FC">
   </label>
 </div>
-  <input type="submit">
 <div id="char-select">
   <label>
     Player 1 Fighter:
-    <select>
-      <option></option>
+    <select id="p1fighter" formControlName="fighter1">
+      <option *ngFor="let character of characters" value={{character}}>{{character}}</option>
     </select>
   </label>
   <label>
     Player 2 Fighter:
-    <select>
-      <option></option>
+    <select id="p2fighter" formControlName="fighter2">
+      <option *ngFor="let character of characters" value={{character}}>{{character}}</option>
     </select>
   </label>
 </div>
+  <input type="submit">
 <br/>
 </form>
 <p id="p1nameUpdate"></p>
 <p id="p2nameUpdate"></p>
+<canvas id="thumbnailPreview"></canvas>
