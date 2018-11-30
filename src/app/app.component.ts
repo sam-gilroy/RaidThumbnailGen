@@ -11,10 +11,14 @@ export class AppComponent implements OnInit {
   p2Update;
   fg: FormGroup;
   characters: String[];
-  fighterImgs: Map<String, string> = new Map<String, string>();
+  fighterImgs: Map<String, HTMLImageElement> = new Map<String, HTMLImageElement>();
+  back: HTMLImageElement;
+
   constructor(
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
+
   ngOnInit(): void {
     this.characters = ['Bayonetta',
       'Bowser',
@@ -93,15 +97,19 @@ export class AppComponent implements OnInit {
     this.p1Update = document.getElementById('p1nameUpdate');
     this.p2Update = document.getElementById('p2nameUpdate');
     this.fg = this.formBuilder.group({
-      name1FC : [''],
-      name2FC : [''],
-      fighter1 : [],
-      fighter2 : []
+      name1FC: [''],
+      name2FC: [''],
+      fighter1: [],
+      fighter2: []
     });
-    const tempFighterImgs = new Map<String, string>();
+    const tempFighterImgs = new Map<String, HTMLImageElement>();
     this.characters.forEach(function (value) {
-      tempFighterImgs.set(value, 'assets/' + (value.toLowerCase().replace(/\./g, '').replace(/ /g, '_')) + '.png');
+      const img = new Image();
+      img.src = 'assets/' + (value.toLowerCase().replace(/\./g, '').replace(/ /g, '_')) + '.png';
+      tempFighterImgs.set(value, img);
     });
+    this.back = new Image();
+    this.back.src = 'assets/background.png';
     this.fighterImgs = tempFighterImgs;
     console.log(this.fighterImgs);
   }
@@ -111,21 +119,21 @@ export class AppComponent implements OnInit {
     console.log(this.fg);
     const tempfg = this.fg;
     const tempImgs = this.fighterImgs;
-    this.p1Update.innerHTML = this.fg.get('name1FC').value;
-    this.p2Update.innerHTML = this.fg.get('name2FC').value;
     const thumbnail = <HTMLCanvasElement>document.getElementById('thumbnailPreview');
     const ctx = thumbnail.getContext('2d');
-    const p1 = new Image();
-    const p2 = new Image();
-    p1.src = this.fighterImgs.get(this.fg.get('fighter1').value);
-    p1.onload = function() {
-      p2.src = tempImgs.get(tempfg.get('fighter2').value);
-      ctx.drawImage(p1, 0, 0, 250, 250);
-      p2.onload = function() {
-        ctx.drawImage(p2, 830, 0, 250, 250);
-        const newImg = thumbnail.toDataURL();
-        document.write('<img src="' + newImg + '" width="250" height="250"/>');
-      };
-    };
+    ctx.font = '30px Arial';
+    const p1 = this.fighterImgs.get(this.fg.get('fighter1').value);
+    const p2 = tempImgs.get(tempfg.get('fighter2').value);
+    console.log(p1);
+    console.log(p2);
+    ctx.drawImage(this.back, 0, 0);
+    ctx.drawImage(p1, 0, 150);
+    console.log('drew p1');
+    ctx.drawImage(p2, 650, 150);
+    console.log('drew p2');
+    ctx.strokeText(this.fg.get('name1FC').value, 0, 100);
+    ctx.strokeText(this.fg.get('name2FC').value, 650, 100);
+    // const newImg = thumbnail.toDataURL();
+    // document.write('<img src="' + newImg + '" width="250" height="250"/>');
   }
 }
