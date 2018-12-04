@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   characters: String[];
   fighterImgs: Map<String, HTMLImageElement> = new Map<String, HTMLImageElement>();
   back: HTMLImageElement;
+  border: HTMLImageElement;
 
   constructor(
     private formBuilder: FormBuilder
@@ -104,14 +105,19 @@ export class AppComponent implements OnInit {
     });
     const tempFighterImgs = new Map<String, HTMLImageElement>();
     this.characters.forEach(function (value) {
-      const img = new Image();
+      const img = new Image(400, 400);
       img.src = 'assets/' + (value.toLowerCase().replace(/\./g, '').replace(/ /g, '_')) + '.png';
       tempFighterImgs.set(value, img);
     });
     this.back = new Image();
-    this.back.src = 'assets/background.png';
+    this.back.src = 'assets/background.jpg';
+    this.border = new Image();
+    this.border.src = 'assets/border.png';
     this.fighterImgs = tempFighterImgs;
     console.log(this.fighterImgs);
+    const thumbnail = <HTMLCanvasElement>document.getElementById('thumbnailPreview');
+    const ctx = thumbnail.getContext('2d');
+    ctx.font = '80px bigNoodle';
   }
 
   onSubmit(e: Event): void {
@@ -121,18 +127,22 @@ export class AppComponent implements OnInit {
     const tempImgs = this.fighterImgs;
     const thumbnail = <HTMLCanvasElement>document.getElementById('thumbnailPreview');
     const ctx = thumbnail.getContext('2d');
-    ctx.font = '30px Arial';
+    ctx.font = '90px bigNoodle';
+    ctx.fillStyle = 'white';
     const p1 = this.fighterImgs.get(this.fg.get('fighter1').value);
     const p2 = tempImgs.get(tempfg.get('fighter2').value);
     console.log(p1);
     console.log(p2);
-    ctx.drawImage(this.back, 0, 0);
-    ctx.drawImage(p1, 0, 150);
+    ctx.drawImage(this.back, 0, -100);
+    ctx.drawImage(p1, 100, 200, 325, 325);
     console.log('drew p1');
-    ctx.drawImage(p2, 650, 150);
+    ctx.drawImage(p2, 825, 200, 325, 325);
     console.log('drew p2');
-    ctx.strokeText(this.fg.get('name1FC').value, 0, 100);
-    ctx.strokeText(this.fg.get('name2FC').value, 650, 100);
+    ctx.drawImage(this.border, 0, 0);
+    ctx.fillText(this.fg.get('name1FC').value, 150, 120);
+    ctx.fillText(this.fg.get('name2FC').value, 825, 120);
+    ctx.font = '180px bigNoodle';
+    ctx.fillText('VS', 560, 400);
     // const newImg = thumbnail.toDataURL();
     // document.write('<img src="' + newImg + '" width="250" height="250"/>');
   }

@@ -2,5 +2,7 @@ select{
   width:150px;
 }
 
-canvas{
+@font-face {
+  font-family: bigNoodle;
+  src: url("../assets/big_noodle_titling.ttf");
 }
