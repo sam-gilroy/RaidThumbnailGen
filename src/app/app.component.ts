@@ -34,9 +34,11 @@ export class AppComponent implements OnInit {
       'Diddy Kong',
       'Donkey Kong',
       'Dr. Mario',
+      'Duck Hunt',
       'Falco',
       'Fox',
       'Ganondorf',
+      'Greninja',
       'Ice Climbers',
       'Ike',
       'Incineroar',
@@ -95,13 +97,17 @@ export class AppComponent implements OnInit {
       'Zelda',
       'Zero Suit Samus'];
     console.log(this.characters);
+    // characters to be checked out later: Lucina, Marth, Ganondorf, Palutena
     this.p1Update = document.getElementById('p1nameUpdate');
     this.p2Update = document.getElementById('p2nameUpdate');
     this.fg = this.formBuilder.group({
       name1FC: [''],
       name2FC: [''],
       fighter1: [],
-      fighter2: []
+      fighter2: [],
+      roundName: ['Winners'],
+      roundNum: [],
+      date: [],
     });
     const tempFighterImgs = new Map<String, HTMLImageElement>();
     this.characters.forEach(function (value) {
@@ -134,15 +140,23 @@ export class AppComponent implements OnInit {
     console.log(p1);
     console.log(p2);
     ctx.drawImage(this.back, 0, -100);
-    ctx.drawImage(p1, 100, 200, 325, 325);
+    ctx.drawImage(p1, 0, 180);
     console.log('drew p1');
-    ctx.drawImage(p2, 825, 200, 325, 325);
+    ctx.drawImage(p2, 675, 180);
     console.log('drew p2');
     ctx.drawImage(this.border, 0, 0);
-    ctx.fillText(this.fg.get('name1FC').value, 150, 120);
-    ctx.fillText(this.fg.get('name2FC').value, 825, 120);
+    ctx.fillText(this.fg.get('name1FC').value, 120, 120);
+    ctx.fillText(this.fg.get('name2FC').value, 850, 120);
     ctx.font = '180px bigNoodle';
-    ctx.fillText('VS', 560, 400);
+    ctx.fillText('VS', 575, 400);
+    const date = new Date(this.fg.get('date').value);
+    const d = date.getDate() + 1;
+    const m = date.getMonth() + 1;
+    const y = date.getFullYear();
+    ctx.fillText(m + '/' + d + '/' + y, 400 , 700);
+    ctx.font = '50px bigNoodle';
+    ctx.fillText(this.fg.get('roundName').value, 585, 450);
+    ctx.fillText('Round ' + this.fg.get('roundNum').value, 590, 500);
     // const newImg = thumbnail.toDataURL();
     // document.write('<img src="' + newImg + '" width="250" height="250"/>');
   }

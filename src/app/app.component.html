@@ -23,6 +23,20 @@
     </select>
   </label>
 </div>
+  <div id="round-info">
+    <label>
+      Bracket:
+      <select id="bracket" formControlName="roundName">
+        <option value="Winners">Winners</option>
+        <option value="Losers">Losers</option>
+      </select>
+    </label>
+    <label>
+      Round #:
+      <input id="round" type="text" formControlName="roundNum">
+    </label>
+  </div>
+  <input type="date" formControlName="date">
   <input type="submit">
 <br/>
 </form>
